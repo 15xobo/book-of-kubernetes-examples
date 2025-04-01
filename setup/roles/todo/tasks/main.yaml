@@ -5,8 +5,9 @@
     update_cache: yes
 
 - name: python prerequisites
-  pip:
-    name: openshift
+  apt:
+    name: python3-openshift
+    update_cache: yes
 
 - name: manifests directory
   ansible.builtin.file:
