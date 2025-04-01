@@ -1,6 +1,5 @@
 ---
 todo_kubeconfig: /etc/kubernetes/admin.conf
-todo_version: 1.0.2
 todo_replicas: 3
 todo_prefix: /todo
 todo_namespace: todo

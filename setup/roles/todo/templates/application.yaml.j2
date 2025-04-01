@@ -21,7 +21,8 @@ spec:
     spec:
       containers:
       - name: todo
-        image: bookofkubernetes/todo:{{ todo_version }}
+        image: hashicorp/http-echo
+        args: ["-listen=:5000"]
         env:
         - name: NODE_ENV
           value: production
