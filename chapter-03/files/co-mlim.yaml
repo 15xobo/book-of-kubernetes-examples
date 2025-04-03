@@ -2,7 +2,7 @@
 metadata:
   name: stress2
 image:
-  image: docker.io/bookofkubernetes/stress:stable
+  image: jfleach/docker-arm-stress-ng
 args:
   - "--vm"
   - "1"
