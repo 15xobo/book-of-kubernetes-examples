@@ -2,6 +2,7 @@
 metadata:
   name: busybox
   namespace: crio
+  uid: "0"
 linux:
   security_context:
     namespace_options:
