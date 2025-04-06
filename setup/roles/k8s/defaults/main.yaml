@@ -10,8 +10,8 @@ k8s_postgresql_operator: none
 k8s_postgresql_operator_namespace: default
 
 k8s_version: 1.32.0
-calico_version: 3.27.2
-k8s_longhorn_version: 1.6.0
-metrics_server_version: 0.7.0
-ingress_version: 1.10.0
-k8s_prometheus_version: "0.10"
+calico_version: 3.29.3
+k8s_longhorn_version: 1.8.1
+metrics_server_version: 0.7.2
+ingress_version: 1.12.1
+k8s_prometheus_version: "0.14.0"
