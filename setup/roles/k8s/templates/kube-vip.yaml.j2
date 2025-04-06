@@ -1,38 +1,36 @@
 apiVersion: v1
 kind: Pod
 metadata:
+  creationTimestamp: null
   name: kube-vip
   namespace: kube-system
 spec:
   containers:
-  - name: kube-vip
-    image: ghcr.io/kube-vip/kube-vip:v0.3.8
-    imagePullPolicy: Always
-    args:
+  - args:
     - manager
     env:
     - name: vip_arp
       value: "false"
-    - name: vip_interface
-      value: lo
     - name: port
       value: "6443"
+    - name: vip_nodename
+      valueFrom:
+        fieldRef:
+          fieldPath: spec.nodeName
+    - name: vip_interface
+      value: lo
     - name: vip_cidr
       value: "32"
+    - name: dns_mode
+      value: first
     - name: cp_enable
       value: "true"
     - name: cp_namespace
       value: kube-system
-    - name: vip_ddns
-      value: "false"
     - name: svc_enable
       value: "true"
-    - name: vip_startleader
-      value: "false"
-    - name: vip_addpeerstolb
-      value: "true"
-    - name: vip_localpeer
-      value: {{ inventory_hostname }}:{{ ansible_facts['all_ipv4_addresses'] | intersect(k8s_cluster_ips) | join('') }}:10000
+    - name: svc_leasename
+      value: plndr-svcs-lock
     - name: bgp_enable
       value: "true"
     - name: bgp_routerid
@@ -45,19 +43,31 @@ spec:
       value: "65000"
     - name: bgp_peers
       value: {{ k8s_cluster_ips | join(':65000::false,') }}:65000::false
-    - name: vip_address
+    - name: address
       value: {{ k8s_control_plane_endpoint }}
+    - name: prometheus_server
+      value: :2112
+    image: ghcr.io/kube-vip/kube-vip:v0.8.10
+    imagePullPolicy: IfNotPresent
+    name: kube-vip
+    resources: {}
     securityContext:
       capabilities:
         add:
         - NET_ADMIN
         - NET_RAW
-        - SYS_TIME
+        drop:
+        - ALL
     volumeMounts:
     - mountPath: /etc/kubernetes/admin.conf
       name: kubeconfig
+  hostAliases:
+  - hostnames:
+    - kubernetes
+    ip: 127.0.0.1
   hostNetwork: true
   volumes:
   - hostPath:
       path: /etc/kubernetes/admin.conf
     name: kubeconfig
+status: {}
