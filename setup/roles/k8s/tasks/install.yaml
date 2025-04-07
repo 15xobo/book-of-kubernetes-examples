@@ -1,14 +1,4 @@
 ---
-- name: br_netfilter module
-  community.general.modprobe:
-    name: br_netfilter
-    state: present
-
-- name: make br_netfilter module persistent
-  ansible.builtin.copy:
-    content: 'br_netfilter'
-    dest: /etc/modules-load.d/k8s.conf
-
 - name: sysctl settings
   ansible.posix.sysctl:
     name: "{{ item }}"
@@ -18,8 +8,6 @@
     reload: yes
   loop:
     - net.ipv4.ip_forward
-    - net.bridge.bridge-nf-call-ip6tables
-    - net.bridge.bridge-nf-call-iptables
 
 - name: prerequisites and sundries
   ansible.builtin.apt:
@@ -38,12 +26,12 @@
 
 - name: gpg key
   ansible.builtin.apt_key:
-    url: https://pkgs.k8s.io/core:/stable:/v1.28/deb/Release.key
+    url: https://pkgs.k8s.io/core:/stable:/v1.32/deb/Release.key
     state: present
 
 - name: repository
   ansible.builtin.apt_repository:
-    repo: deb https://pkgs.k8s.io/core:/stable:/v1.28/deb/ /
+    repo: deb https://pkgs.k8s.io/core:/stable:/v1.32/deb/ /
     state: present
     filename: kubernetes
 
