@@ -5,6 +5,7 @@ metadata:
 spec:
   # Configures Calico networking.
   calicoNetwork:
+    bgp: Disabled
     ipPools:
     - blockSize: 26
       cidr: {{ k8s_pod_cidr }}
