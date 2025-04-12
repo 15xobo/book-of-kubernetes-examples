@@ -9,7 +9,9 @@ metadata:
 spec:
   containers:
   - name: iperf
-    image: bookofkubernetes/iperf3:stable
+    image: networkstatic/iperf3
+    command: ["iperf3"]
+    args: ["-c", "iperf-server"]
     resources:
       requests:
         memory: "64Mi"
