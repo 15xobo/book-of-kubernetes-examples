@@ -16,4 +16,5 @@ spec:
   databases:
     defaultdb: dbuser
   postgresql:
-    version: "14"
+    version: "17"
+  dockerImage: ghcr.io/zalando/spilo-17:4.0-p2
