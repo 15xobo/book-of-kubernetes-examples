@@ -25,7 +25,6 @@ spec:
             topologyKey: "kubernetes.io/hostname"
       containers:
       - name: iperf
-        image: bookofkubernetes/iperf3:1.0.0
-        env:
-        - name: IPERF_SERVER
-          value: "1"
+        image: networkstatic/iperf3
+        command: ["iperf3"]
+        args: ["-s"]
